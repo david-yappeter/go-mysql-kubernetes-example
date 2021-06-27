@@ -1,0 +1,50 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql-go
+spec:
+  selector:
+    app: mysql-go
+  ports:
+  - port: 3306
+
+---
+
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mysql-go
+spec:
+  selector:
+    matchLabels:
+      app: mysql-go
+  template:
+    metadata:
+      labels:
+        app: mysql-go
+    spec:
+      # volumes:
+      #   - name: mysql-persistent-storage
+      #     emptyDir: {}
+      containers:
+      - name: mysql-go
+        image: mysql:latest
+        resources:
+          limits:
+            cpu: "1"
+            memory: 512Mi
+          requests:
+            cpu: 500m
+            memory: 256Mi
+        ports:
+        - containerPort: 3306
+        env:
+        - name: MYSQL_ALLOW_EMPTY_PASSWORD
+          value: "yes"
+        - name: MYSQL_DATABASE
+          value: tester
+        # volumeMounts:
+        # - name: mysql-persistent-storage
+        #   mountPath: /var/lib/mysql
+          

@@ -1,0 +1,22 @@
+type Item {
+    id: ID!
+    name: String!
+    user_id: ID!
+}
+
+input NewItem {
+    name: String!
+    user_id: ID!
+}
+
+input UpdateItem {
+    id: ID!
+    name: String!
+    user_id: ID!
+}
+
+type ItemOps {
+    create(input: NewItem!): Item! @goField(forceResolver: true)
+    update(input: UpdateItem!): String @goField(forceResolver: true)
+    delete(id: ID!): String @goField(forceResolver: true)
+}

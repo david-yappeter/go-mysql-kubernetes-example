@@ -1,0 +1,20 @@
+type User {
+    id: ID!
+    name: String!
+    items: [Item!]! @goField(forceResolver: true)
+}
+
+input NewUser {
+    name: String!
+}
+
+input UpdateUser {
+    id: ID!
+    name: String!
+}
+
+type UserOps {
+    create(input: NewUser!): User! @goField(forceResolver: true)
+    update(input: UpdateUser!): String @goField(forceResolver: true)
+    delete(id: ID!): String @goField(forceResolver: true)
+}
